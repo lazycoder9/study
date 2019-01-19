@@ -2,20 +2,21 @@ module Exercise
   module Arrays
     class << self
       def replace(array)
-        array.map { |x| x.negative? ? x : array.max }
+        max_number = array.reduce(array[0]) { |acc, n| n > acc ? n : acc }
+        array.map { |x| x.negative? ? x : max_number }
       end
 
       def search(array, query)
-        iter = lambda do |left, right|
-          return -1 if left > right
+        left = 0
+        right = array.length - 1
 
+        while left <= right do
           mid = (left + right) / 2
           return mid if array[mid] == query
-
-          new_params = array[mid] > query ? [left, mid - 1] : [mid + 1, right]
-          iter.call(*new_params)
+          left, right = array[mid] > query ? [left, mid - 1] : [mid + 1, right]
         end
-        iter.call(0, array.length - 1)
+
+        -1
       end
     end
   end
