@@ -9,6 +9,7 @@ module Exercise
         for i in 0..(length - 1)
           yield(self[i])
         end
+        self
       end
 
       # Написать свою функцию my_map
@@ -26,11 +27,12 @@ module Exercise
       end
 
       # Написать свою функцию my_reduce
-      def my_reduce(acc = nil)
-        for i in 0..(length - 1)
+      def my_reduce(init = nil)
+        acc = self[0]
+        for i in 1..(length - 1)
           acc = yield(acc, self[i])
         end
-        acc
+        init ? yield(init, acc) : acc
       end
     end
   end
